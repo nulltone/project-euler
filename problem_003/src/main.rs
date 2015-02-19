@@ -1,19 +1,33 @@
-fn main() {
-    let mut primes = vec![];
-    let maxNum = 600851475143;
+use std::collections::HashMap;
 
-    for x in 2..maxNum {
-        println!("Foo!");
-        // if primes.as_slice().get(x) != None {
-        //     continue;
-        // } else {
-        //     primes[x] = true;
-        //     let mut inc = x;
-        //     while inc <= maxNum {
-        //         primes[inc] = false;
-        //         inc += inc;
-        //     }
-        // }
-        break;
-    }
+fn main() {
+	let mut primes : HashMap<u64, bool> = HashMap::new();
+	//let max_num: u64 = 600851475143;
+	let max_num: u64 = 13195;
+
+	println!("Primes: ");
+	for x in 2..max_num {
+		match primes.get(&x) {
+			Some(_) => {
+				continue;
+			} 
+			None => {}
+		}
+
+		primes.insert(x, true);
+		let mut inc = x;
+		while inc <= max_num {
+				primes.insert(inc, false);
+				inc += inc;
+		}
+
+		match primes.get(&x) {
+			Some(t) => {
+				if *t {
+					println!("{}", *t);
+				} 
+			}
+			None => {}
+		}
+	}
 }
