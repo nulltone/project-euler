@@ -1,41 +1,36 @@
-use std::collections::HashMap;
+#![feature(env)]
+
+use std::env;
 
 fn main() {
-	let mut primes : HashMap<u64, bool> = HashMap::new();
-	//let max_num: u64 = 600851475143;
-	let max_num: u64 = 35;
+    let args: Vec<String>= env::args().collect();
 
-	for x in 2..max_num {
-        // Checks if the value has been inserted already.
-		match primes.get(&x) {
-			Some(&exists) => {
-                // Value already inserted. Skipping.
-                println!("exists - primes[{}]:{}", x, exists);
-				continue;
-			} 
-			None => {
-                // Inserts the prime if it doesn't exist.
-                primes.insert(x, true);
-                println!("inserted - primes[{}]:true", x);
-            }
-		}
+    if args.len() < 2 {
+        println!("Please enter a number.");
+        return;
+    }
 
-        // Marks off all multiples of current values to false.
-        let mut counter = 2;
-		let mut inc = x * counter;
-		while inc <= max_num {
-				primes.insert(inc, false);
-                //println!("--- marked - primes[{}]:false", inc);
-                counter += 1;
-				inc = x * counter;
-		}
+    let max_num: u64 = match args[1].parse() {
+        Ok(val) => {val},
+        Err(_) => {
+            println!("Cannot convert string to an unsigned int!");
+            return;
+        }
+    };
+
+    let mut max_num_mut = max_num;
+    let mut largest_prime = 1;
+    let mut x = 2;
+
+	while x <= max_num_mut {
+        if max_num % x == 0 {
+            largest_prime = x;
+            max_num_mut /= x;
+        }
+
+        x += 1;
 	}
 
-    println!("Prime numbers: ");
-    for (&num, &is_prime) in primes.iter() {
-        if is_prime {
-            println!("{}", num);
-        }
-    }
+    println!("Largest prime: {}", largest_prime);
 }
 
