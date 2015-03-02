@@ -22,14 +22,14 @@ fn main() {
     let mut largest_prime = 1;
     let mut x = 2;
 
-	while x <= max_num_mut {
+    while x <= max_num_mut {
         if max_num % x == 0 {
             largest_prime = x;
             max_num_mut /= x;
         }
 
         x += 1;
-	}
+    }
 
     println!("Largest prime: {}", largest_prime);
 }
