@@ -32,16 +32,16 @@ fn calculate_max_palindrome(number: u32) -> u32 {
     for left_product in range(0, number + 1).rev() {
         for right_product in range(0, number + 1).rev() {
             let value: u32 = left_product * right_product;
-            if value < highest_product {
-                break;
-            }
-            
             let value_str = value.to_string();
             if value_str == value_str.as_slice().chars().rev().collect::<String>() {
                 if value > highest_product {
                     highest_product = value;
                 }
             }
+        }
+
+        if (left_product * number) < highest_product {
+            break;
         }
     }
 
