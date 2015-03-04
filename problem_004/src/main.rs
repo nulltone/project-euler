@@ -14,7 +14,7 @@ fn main() {
     let max_digits: u32 = match args[1].parse() {
         Ok(val) => {val},
         Err(_) => {
-            println!("Cannot convert argument(s) to an uint8!");
+            println!("Cannot convert argument(s) to an unsigned int!");
             return;
         }
     };
