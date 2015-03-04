@@ -6,8 +6,10 @@ use std::num::Int;
 
 fn main() {
     let args: Vec<String> = env::args().collect();
-
-    check_args(&args);
+    if args.len() < 2 {
+        println!("Please enter a number.");
+        return;
+    }
 
     let max_digits: u32 = match args[1].parse() {
         Ok(val) => {val},
@@ -24,13 +26,6 @@ fn main() {
     println!("Max palindrome: {}", value);
 }
 
-fn check_args(args: &Vec<String>) {
-    if args.len() < 2 {
-        println!("Please enter a number.");
-        return;
-    }
-}
-
 fn calculate_max_palindrome(number: u32) -> u32 {
     let mut highest_product = 0;
 
@@ -40,8 +35,9 @@ fn calculate_max_palindrome(number: u32) -> u32 {
             if value < highest_product {
                 break;
             }
-
-            if is_palindrome(explode_digits(value)) {
+            
+            let value_str = value.to_string();
+            if value_str == value_str.as_slice().chars().rev().collect::<String>() {
                 if value > highest_product {
                     highest_product = value;
                 }
@@ -50,38 +46,5 @@ fn calculate_max_palindrome(number: u32) -> u32 {
     }
 
     return highest_product;
-}
-
-fn explode_digits(number: u32) -> Vec<u32> {
-    let mut digits: Vec<u32> = Vec::new();
-    let mut num = number;
-
-    while num > 0 {
-        digits.push(((num as u32) % 10) as u32);
-        num /= 10;
-    }
-
-    return digits;
-}
-
-fn is_palindrome(exploded: Vec<u32>) -> bool {
-    let mut x = 0;
-    let mut y = exploded.len() - 1;
-
-    if exploded.len() == 0 {
-        return false;
-    }
-
-    while x != y && x < y {
-        if exploded[x] == exploded[y] {
-            x += 1;
-            y -= 1;
-            continue;
-        } else {
-            return false;
-        }
-    }
-
-    return true;
 }
 
