@@ -44,7 +44,6 @@ fn calculate_max_palindrome(number: u32) -> u32 {
             if is_palindrome(explode_digits(value)) {
                 if value > highest_product {
                     highest_product = value;
-                    println!("Product: {} x {} = {}", left_product, right_product, highest_product);
                 }
             }
         }
